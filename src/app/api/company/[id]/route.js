@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
-import Company from "@/lib/models/Company";
+import Company from "@/models/Company";
 import mongoose from "mongoose";
 
 export async function PUT(req, { params }) {
