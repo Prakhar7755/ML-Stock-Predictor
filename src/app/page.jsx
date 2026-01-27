@@ -8,8 +8,8 @@ export default function Home() {
       bg-gradient-to-br from-indigo-950 via-indigo-900 to-sky-950"
     >
       {/* Glow blobs */}
-      <div className="pointer-events-none absolute -top-40 -left-40 h-[28rem] w-[28rem] rounded-full bg-fuchsia-500/20 blur-3xl" />
-      <div className="pointer-events-none absolute top-1/2 -right-40 h-[28rem] w-[28rem] rounded-full bg-cyan-400/20 blur-3xl" />
+      <div className="pointer-events-none absolute -top-40 -left-40 h-112 w-md rounded-full bg-fuchsia-500/20 blur-3xl" />
+      <div className="pointer-events-none absolute top-1/2 -right-40 h-112 w-md rounded-full bg-cyan-400/20 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-indigo-600/20 blur-3xl" />
 
       <div className="relative z-10 max-w-3xl text-center">
