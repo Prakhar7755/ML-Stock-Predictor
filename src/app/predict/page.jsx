@@ -131,7 +131,7 @@ export default function PredictPage() {
 
   /* -------------------- UI -------------------- */
   return (
-    <section className="mx-auto max-w-5xl px-6 py-12 text-gray-100">
+    <section className="mx-auto max-w-5xl px-4 py-8 text-gray-100 md:px-6 md:py-12">
       <h1 className="mb-10 text-center text-3xl font-bold tracking-tight">
         Stock Price <span className="text-emerald-500">Prediction</span>
       </h1>
@@ -156,7 +156,7 @@ export default function PredictPage() {
           </Field>
 
           {selectedCompany === "__custom__" && (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <Field label="Company Name">
                 <input
                   className="w-full rounded-lg border border-gray-800 bg-gray-950 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
@@ -188,7 +188,7 @@ export default function PredictPage() {
             </select>
           </Field>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Field label="Start Date">
               <input
                 type="date"

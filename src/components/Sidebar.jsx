@@ -18,21 +18,21 @@ const companies = [
 ];
 
 export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   return (
     <aside
-      className={`relative flex flex-col border-r border-gray-800 bg-gray-900 transition-all duration-300 ${
-        collapsed ? "w-20" : "w-72"
-      }`}
+      className={`flex flex-col border-b border-gray-800 bg-gray-900 transition-all duration-300 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:border-b-0 md:border-r ${
+        collapsed ? "md:w-20" : "md:w-72"
+      } w-full`}
     >
       {/* Header */}
       <div className="flex h-16 items-center justify-between border-b border-gray-800 px-4">
-        {!collapsed && (
-          <span className="text-sm font-semibold uppercase tracking-wider text-gray-500">
-            Market Watch
-          </span>
-        )}
+        <span
+          className={`text-sm font-semibold uppercase tracking-wider text-gray-500 ${collapsed ? "md:hidden" : ""}`}
+        >
+          Market Watch
+        </span>
 
         <button
           onClick={() => setCollapsed((v) => !v)}
@@ -44,7 +44,9 @@ export default function Sidebar() {
       </div>
 
       {/* Company List */}
-      <ul className="flex-1 overflow-y-auto py-4 px-2 space-y-1">
+      <ul
+        className={`flex-1 overflow-y-auto py-4 px-2 space-y-1 ${collapsed ? "hidden md:block" : ""}`}
+      >
         {companies.map(({ name, symbol }) => (
           <li key={symbol}>
             <Link
@@ -52,7 +54,7 @@ export default function Sidebar() {
               className="group flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-gray-400 transition-colors hover:bg-gray-800 hover:text-white"
             >
               {/* Name */}
-              {!collapsed && <span>{name}</span>}
+              <span className={collapsed ? "md:hidden" : ""}>{name}</span>
 
               {/* Symbol */}
               <span

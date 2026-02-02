@@ -107,7 +107,7 @@ const SelectedCompanyClient = () => {
   }, [fetchData]);
 
   return (
-    <section className="mx-auto max-w-4xl px-6 py-12 text-gray-100">
+    <section className="mx-auto max-w-4xl px-4 py-8 text-gray-100 md:px-6 md:py-12">
       <h1 className="mb-8 text-center text-3xl font-bold">
         Stock <span className="text-emerald-500">Analysis</span>
       </h1>

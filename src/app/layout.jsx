@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       <body className="bg-gray-950 text-gray-100 antialiased">
         <Navbar />
 
-        <div className="flex min-h-[calc(100vh-4rem)]">
+        <div className="flex min-h-[calc(100vh-4rem)] flex-col md:flex-row">
           <Sidebar />
           <main className="flex-1 bg-gray-950">{children}</main>
         </div>
