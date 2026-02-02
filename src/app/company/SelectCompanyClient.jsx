@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Line } from "react-chartjs-2";
 import "@/lib/chartjs";
 
-const SelectedCompanyClient=()=> {
+const SelectedCompanyClient = () => {
   const searchParams = useSearchParams();
   const symbol = searchParams.get("symbol");
   const companyName = searchParams.get("name");
@@ -71,9 +71,7 @@ const SelectedCompanyClient=()=> {
 
       /* ---- Chart Build ---- */
       const labels = historicalData.map((d) => d.date);
-      const prices = historicalData.map((d) =>
-        Number(d.close.toFixed(2))
-      );
+      const prices = historicalData.map((d) => Number(d.close.toFixed(2)));
 
       const nextDate = new Date(labels.at(-1));
       nextDate.setDate(nextDate.getDate() + 1);
@@ -85,16 +83,16 @@ const SelectedCompanyClient=()=> {
           {
             label: "Close Price",
             data: [...prices, predictJson.predictedPrice],
-            borderColor: "#6366f1",
-            backgroundColor: "rgba(99,102,241,0.12)",
+            borderColor: "#10b981",
+            backgroundColor: "rgba(16, 185, 129, 0.1)",
             tension: 0.4,
-            pointBackgroundColor: prices.map(() => "#6366f1"),
+            pointBackgroundColor: prices.map(() => "#10b981"),
           },
         ],
       });
 
       setAnalysisResult(
-        `Predicted price for ${companyName} (${symbol}) on ${predictedDate}: ${predictJson.predictedPrice}`
+        `Predicted price for ${companyName} (${symbol}) on ${predictedDate}: ${predictJson.predictedPrice}`,
       );
     } catch (err) {
       console.error(err);
@@ -109,32 +107,30 @@ const SelectedCompanyClient=()=> {
   }, [fetchData]);
 
   return (
-    <section className="mx-auto max-w-4xl px-6 py-12">
-      <h1 className="mb-8 text-center text-3xl font-extrabold">
-        <span className="bg-gradient-to-r from-indigo-500 to-sky-500 bg-clip-text text-transparent">
-          Stock Analysis
-        </span>
+    <section className="mx-auto max-w-4xl px-6 py-12 text-gray-100">
+      <h1 className="mb-8 text-center text-3xl font-bold">
+        Stock <span className="text-emerald-500">Analysis</span>
       </h1>
 
       {loading && (
-        <p className="text-center text-slate-600">
+        <p className="text-center text-gray-500 animate-pulse">
           Loading analysis…
         </p>
       )}
 
       {!loading && analysisResult && (
-        <p className="mb-6 text-center text-lg font-medium text-slate-700">
+        <p className="mb-6 text-center text-lg font-medium text-emerald-400">
           {analysisResult}
         </p>
       )}
 
       {!loading && chartData && (
-        <div className="rounded-2xl bg-white p-6 shadow">
+        <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-lg">
           <Line data={chartData} />
         </div>
       )}
     </section>
   );
-}
+};
 
 export default SelectedCompanyClient;

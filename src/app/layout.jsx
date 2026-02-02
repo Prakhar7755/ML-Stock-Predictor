@@ -25,14 +25,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-b from-indigo-900 via-indigo-800 to-sky-900">
+      <body className="bg-gray-950 text-gray-100 antialiased">
         <Navbar />
 
         <div className="flex min-h-[calc(100vh-4rem)]">
           <Sidebar />
-          <main className="flex-1  bg-gradient-to-br from-indigo-950 via-indigo-900 to-sky-950">
-            {children}
-          </main>
+          <main className="flex-1 bg-gray-950">{children}</main>
         </div>
 
         <Footer />

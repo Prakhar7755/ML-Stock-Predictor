@@ -3,52 +3,36 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <section
-      className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden px-6
-      bg-gradient-to-br from-indigo-950 via-indigo-900 to-sky-950"
-    >
-      {/* Glow blobs */}
-      <div className="pointer-events-none absolute -top-40 -left-40 h-112 w-md rounded-full bg-fuchsia-500/20 blur-3xl" />
-      <div className="pointer-events-none absolute top-1/2 -right-40 h-112 w-md rounded-full bg-cyan-400/20 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-indigo-600/20 blur-3xl" />
+    <section className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden bg-gray-950 px-6 text-center">
+      {/* Background Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-emerald-500 opacity-20 blur-[100px]"></div>
 
-      <div className="relative z-10 max-w-3xl text-center">
-        <h1 className="mb-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-          Smarter trading with
-          <br />
-          <span className="bg-gradient-to-r from-cyan-300 via-fuchsia-300 to-indigo-300 bg-clip-text text-transparent">
-            AI Stock Predictions
+      <div className="relative z-10 max-w-4xl">
+        <div className="mb-6 inline-flex items-center rounded-full border border-gray-800 bg-gray-900/50 px-3 py-1 text-sm text-gray-400 backdrop-blur-sm">
+          <span className="mr-2 flex h-2 w-2 rounded-full bg-emerald-500"></span>
+          AI-Powered Market Analysis
+        </div>
+
+        <h1 className="mb-6 text-5xl font-bold tracking-tight text-white sm:text-7xl">
+          Predict the Future of <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+            Stock Markets
           </span>
         </h1>
 
-        <p className="mx-auto mb-10 max-w-2xl text-lg text-indigo-200 sm:text-xl">
-          Analyze market trends, forecast performance, and make confident
-          investment decisions using machine learning–powered insights.
+        <p className="mx-auto mb-10 max-w-2xl text-lg text-gray-400">
+          Leverage advanced machine learning algorithms to forecast stock trends
+          with precision. Make data-driven investment decisions today.
         </p>
 
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             href="/predict"
-            className="group relative inline-flex items-center rounded-xl px-8 py-4 text-lg font-semibold text-white"
+            className="rounded-xl bg-emerald-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-emerald-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]"
           >
-            <span
-              className="absolute inset-0 rounded-xl bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500
-                             transition-transform duration-300 group-hover:scale-105"
-            />
-            <span className="relative z-10 drop-shadow-lg">Get Started →</span>
+            Start Analysis
           </Link>
-        </div>
-
-        {/* Subtle branding */}
-        <div className="mt-20 opacity-40">
-          <Image
-            src="/svg1.svg"
-            alt="App logo"
-            width={80}
-            height={80}
-            className="mx-auto brightness-200"
-            priority={false}
-          />
         </div>
       </div>
     </section>

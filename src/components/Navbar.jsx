@@ -2,36 +2,39 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl
-        bg-gradient-to-br from-indigo-950 via-indigo-900 to-sky-950
-      border-b border-white/10"
-    >
-      <div className="h-16 flex items-center justify-between px-6">
+    <header className="sticky top-0 z-50 border-b border-gray-800 bg-gray-950/80 backdrop-blur-md">
+      <div className="flex h-16 items-center justify-between px-6">
         {/* Brand */}
         <Link
           href="/"
-          className="group text-xl font-extrabold tracking-tight"
+          className="flex items-center gap-2 text-xl font-bold tracking-tight text-white"
         >
-          <span className="bg-gradient-to-r from-cyan-300 via-fuchsia-300 to-indigo-300
-                           bg-clip-text text-transparent
-                           group-hover:brightness-125 transition">
-            AI Stock
-          </span>{" "}
-          <span className="text-white/80">Prediction</span>
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-5 w-5"
+            >
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+              <polyline points="16 7 22 7 22 13"></polyline>
+            </svg>
+          </div>
+          <span>
+            Stock<span className="text-emerald-500">AI</span>
+          </span>
         </Link>
 
         {/* CTA */}
         <Link
           href="/predict"
-          className="group relative overflow-hidden rounded-xl px-6 py-2
-                     text-sm font-semibold text-white"
+          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-emerald-500 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]"
         >
-          <span className="absolute inset-0 rounded-xl
-            bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500
-            transition-transform duration-300 group-hover:scale-110" />
-          <span className="relative z-10 drop-shadow">
-            Custom Analysis →
-          </span>
+          Launch App
         </Link>
       </div>
     </header>

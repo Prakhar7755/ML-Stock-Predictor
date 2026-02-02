@@ -15,7 +15,7 @@ export default function PredictPage() {
 
   const [period1, setPeriod1] = useState("");
   const [period2, setPeriod2] = useState(
-    new Date(Date.now() - 86400000).toISOString().split("T")[0]
+    new Date(Date.now() - 86400000).toISOString().split("T")[0],
   );
 
   const [method, setMethod] = useState("linear-regression");
@@ -61,8 +61,7 @@ export default function PredictPage() {
         ? customSymbol.trim().toUpperCase()
         : symbol;
 
-    if (!name || !sym || !period1 || !period2)
-      return alert("Missing fields");
+    if (!name || !sym || !period1 || !period2) return alert("Missing fields");
 
     if (new Date(period1) >= new Date(period2))
       return alert("Invalid date range");
@@ -111,19 +110,17 @@ export default function PredictPage() {
           {
             label: "Close Price",
             data: [...prices, predicted],
-            borderColor: "#6366f1",
-            backgroundColor: "rgba(99,102,241,0.12)",
+            borderColor: "#10b981",
+            backgroundColor: "rgba(16, 185, 129, 0.1)",
             tension: 0.35,
             pointBackgroundColor: prices.map((_, i) =>
-              i === prices.length ? "#ef4444" : "#6366f1"
+              i === prices.length ? "#ef4444" : "#10b981",
             ),
           },
         ],
       });
 
-      setAnalysisResult(
-        `Predicted price for ${name} (${sym}): ${predicted}`
-      );
+      setAnalysisResult(`Predicted price for ${name} (${sym}): ${predicted}`);
     } catch (err) {
       console.error(err);
       alert("Prediction failed");
@@ -134,21 +131,19 @@ export default function PredictPage() {
 
   /* -------------------- UI -------------------- */
   return (
-    <section className="mx-auto max-w-5xl px-6 py-12">
-      <h1 className="mb-10 text-center text-4xl font-extrabold tracking-tight">
-        <span className="bg-gradient-to-r from-indigo-500 to-sky-500 bg-clip-text text-transparent">
-          Stock Price Prediction
-        </span>
+    <section className="mx-auto max-w-5xl px-6 py-12 text-gray-100">
+      <h1 className="mb-10 text-center text-3xl font-bold tracking-tight">
+        Stock Price <span className="text-emerald-500">Prediction</span>
       </h1>
 
-      <div className="rounded-2xl bg-white p-8 shadow-lg">
+      <div className="rounded-xl border border-gray-800 bg-gray-900 p-8 shadow-2xl">
         <div className="grid gap-6">
           <Field label="Company">
             <select
               value={selectedCompany}
               onChange={handleCompanyChange}
               disabled={companiesLoading}
-              className="input"
+              className="w-full rounded-lg border border-gray-800 bg-gray-950 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
             >
               <option value="">Select company</option>
               {companies.map((c) => (
@@ -164,14 +159,14 @@ export default function PredictPage() {
             <div className="grid grid-cols-2 gap-4">
               <Field label="Company Name">
                 <input
-                  className="input"
+                  className="w-full rounded-lg border border-gray-800 bg-gray-950 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                   value={customCompany}
                   onChange={(e) => setCustomCompany(e.target.value)}
                 />
               </Field>
               <Field label="Symbol">
                 <input
-                  className="input uppercase"
+                  className="w-full rounded-lg border border-gray-800 bg-gray-950 px-4 py-3 text-sm uppercase text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                   value={customSymbol}
                   onChange={(e) => setCustomSymbol(e.target.value)}
                 />
@@ -181,7 +176,7 @@ export default function PredictPage() {
 
           <Field label="Prediction Method">
             <select
-              className="input"
+              className="w-full rounded-lg border border-gray-800 bg-gray-950 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
               value={method}
               onChange={(e) => setMethod(e.target.value)}
             >
@@ -197,7 +192,7 @@ export default function PredictPage() {
             <Field label="Start Date">
               <input
                 type="date"
-                className="input"
+                className="w-full rounded-lg border border-gray-800 bg-gray-950 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                 value={period1}
                 onChange={(e) => setPeriod1(e.target.value)}
               />
@@ -205,7 +200,7 @@ export default function PredictPage() {
             <Field label="End Date">
               <input
                 type="date"
-                className="input"
+                className="w-full rounded-lg border border-gray-800 bg-gray-950 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                 value={period2}
                 onChange={(e) => setPeriod2(e.target.value)}
               />
@@ -215,7 +210,7 @@ export default function PredictPage() {
           <button
             onClick={handleAnalyze}
             disabled={loading}
-            className="mt-4 rounded-xl bg-gradient-to-r from-indigo-500 to-sky-500 py-3 font-semibold text-white shadow hover:scale-[1.02] transition"
+            className="mt-4 rounded-lg bg-emerald-600 py-3 font-semibold text-white shadow-lg transition-all hover:bg-emerald-500 hover:shadow-emerald-500/20 disabled:opacity-50"
           >
             {loading ? "Analyzing…" : "Analyze"}
           </button>
@@ -223,13 +218,13 @@ export default function PredictPage() {
       </div>
 
       {analysisResult && (
-        <p className="mt-8 text-center text-lg font-medium text-slate-700">
+        <p className="mt-8 text-center text-lg font-medium text-emerald-400">
           {analysisResult}
         </p>
       )}
 
       {chartData && (
-        <div className="mt-10 rounded-2xl bg-white p-6 shadow">
+        <div className="mt-10 rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-lg">
           <Line data={chartData} />
         </div>
       )}
@@ -241,7 +236,7 @@ export default function PredictPage() {
 function Field({ label, children }) {
   return (
     <div>
-      <label className="mb-1 block text-sm font-semibold text-slate-600">
+      <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
         {label}
       </label>
       {children}

@@ -22,26 +22,21 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`relative h-screen transition-all duration-300
-        bg-gradient-to-b from-indigo-900 via-indigo-800 to-sky-900
-        border-r border-white/10
-        ${collapsed ? "w-20" : "w-72"}`}
+      className={`relative flex flex-col border-r border-gray-800 bg-gray-900 transition-all duration-300 ${
+        collapsed ? "w-20" : "w-72"
+      }`}
     >
-      {/* Glow */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-fuchsia-500/10 to-cyan-400/10" />
-
       {/* Header */}
-      <div className="relative z-10 flex items-center justify-between px-4 py-4">
+      <div className="flex h-16 items-center justify-between border-b border-gray-800 px-4">
         {!collapsed && (
-          <span className="text-sm font-extrabold tracking-wide text-white/90">
-            Companies
+          <span className="text-sm font-semibold uppercase tracking-wider text-gray-500">
+            Market Watch
           </span>
         )}
 
         <button
           onClick={() => setCollapsed((v) => !v)}
-          className="rounded-lg bg-white/10 p-1 text-white backdrop-blur
-                     hover:bg-white/20 hover:scale-110 transition"
+          className="ml-auto rounded-lg p-1.5 text-gray-400 hover:bg-gray-800 hover:text-white"
           aria-label="Toggle sidebar"
         >
           {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
@@ -49,29 +44,19 @@ export default function Sidebar() {
       </div>
 
       {/* Company List */}
-      <ul className="relative z-10 px-3 space-y-2">
+      <ul className="flex-1 overflow-y-auto py-4 px-2 space-y-1">
         {companies.map(({ name, symbol }) => (
           <li key={symbol}>
             <Link
               href={`/company?symbol=${symbol}&name=${name}`}
-              className="group flex items-center justify-between rounded-xl px-4 py-2
-                         bg-white/10 backdrop-blur
-                         text-sm font-medium text-white/90
-                         shadow-sm
-                         hover:bg-gradient-to-r hover:from-indigo-500/40 hover:to-cyan-500/40
-                         hover:shadow-lg hover:scale-[1.03]
-                         transition"
+              className="group flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-gray-400 transition-colors hover:bg-gray-800 hover:text-white"
             >
               {/* Name */}
-              {!collapsed && (
-                <span className="group-hover:text-white">
-                  {name}
-                </span>
-              )}
+              {!collapsed && <span>{name}</span>}
 
               {/* Symbol */}
               <span
-                className={`text-xs font-bold tracking-wide text-cyan-300
+                className={`text-xs font-bold text-gray-600 group-hover:text-emerald-500
                   ${collapsed ? "mx-auto" : ""}`}
               >
                 {symbol}
