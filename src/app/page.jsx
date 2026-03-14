@@ -1,11 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Home() {
   return (
     <section className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden bg-gray-950 px-6 text-center">
       {/* Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]"></div>
       <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-emerald-500 opacity-20 blur-[100px]"></div>
 
       <div className="relative z-10 max-w-4xl">
@@ -16,7 +15,7 @@ export default function Home() {
 
         <h1 className="mb-6 text-5xl font-bold tracking-tight text-white sm:text-7xl">
           Predict the Future of <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-cyan-400">
             Stock Markets
           </span>
         </h1>
