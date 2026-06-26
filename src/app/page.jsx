@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -21,8 +21,8 @@ export default function Home() {
         </h1>
 
         <p className="mx-auto mb-10 max-w-2xl text-lg text-gray-400">
-          Leverage advanced machine learning algorithms to forecast stock trends
-          with precision. Make data-driven investment decisions today.
+          Leverage advanced machine learning algorithms to forecast stock trends with precision.
+          Make data-driven investment decisions today.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row ">
@@ -41,7 +41,9 @@ export default function Home() {
           <Link
             href="https://github.com/Prakhar7755/ML-Stock-Predictor.git"
             className="rounded-xl bg-gray-700 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-gray-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]"
-          >Github</Link>
+          >
+            Github
+          </Link>
         </div>
       </div>
     </section>

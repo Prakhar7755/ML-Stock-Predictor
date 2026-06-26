@@ -1,7 +1,7 @@
-import { connectDB } from "@/lib/db";
-import { fail, ok, requireUser } from "@/lib/api";
-import Alert from "@/models/Alert";
-import { getQuotes } from "@/lib/market";
+import { connectDB } from '@/lib/db';
+import { fail, ok, requireUser } from '@/lib/api';
+import Alert from '@/models/Alert';
+import { getQuotes } from '@/lib/market';
 
 export async function GET() {
   try {
@@ -19,8 +19,8 @@ export async function GET() {
       const isTriggered =
         alert.isActive &&
         currentPrice != null &&
-        ((alert.direction === "above" && currentPrice >= alert.targetPrice) ||
-          (alert.direction === "below" && currentPrice <= alert.targetPrice));
+        ((alert.direction === 'above' && currentPrice >= alert.targetPrice) ||
+          (alert.direction === 'below' && currentPrice <= alert.targetPrice));
 
       return {
         id: alert._id.toString(),
@@ -37,8 +37,8 @@ export async function GET() {
 
     return ok({ alerts: enrichedAlerts });
   } catch (err) {
-    console.error("Alerts fetch error:", err);
-    return fail("Internal Server Error.", 500);
+    console.error('Alerts fetch error:', err);
+    return fail('Internal Server Error.', 500);
   }
 }
 
@@ -47,14 +47,10 @@ export async function POST(req) {
     const { user, response } = await requireUser();
     if (response) return response;
 
-    const { symbol, name = "", targetPrice, direction } = await req.json();
+    const { symbol, name = '', targetPrice, direction } = await req.json();
 
-    if (
-      !symbol?.trim() ||
-      Number(targetPrice) <= 0 ||
-      !["above", "below"].includes(direction)
-    ) {
-      return fail("Symbol, target price, and direction are required.");
+    if (!symbol?.trim() || Number(targetPrice) <= 0 || !['above', 'below'].includes(direction)) {
+      return fail('Symbol, target price, and direction are required.');
     }
 
     await connectDB();
@@ -66,10 +62,10 @@ export async function POST(req) {
       direction,
     });
 
-    return ok({ message: "Alert created.", alert }, { status: 201 });
+    return ok({ message: 'Alert created.', alert }, { status: 201 });
   } catch (err) {
-    console.error("Alerts create error:", err);
-    return fail("Internal Server Error.", 500);
+    console.error('Alerts create error:', err);
+    return fail('Internal Server Error.', 500);
   }
 }
 
@@ -79,21 +75,21 @@ export async function PATCH(req) {
     if (response) return response;
 
     const { id, isActive } = await req.json();
-    if (!id || typeof isActive !== "boolean") {
-      return fail("Alert id and active status are required.");
+    if (!id || typeof isActive !== 'boolean') {
+      return fail('Alert id and active status are required.');
     }
 
     await connectDB();
     const alert = await Alert.findOneAndUpdate(
       { _id: id, user: user._id },
       { isActive },
-      { new: true },
+      { new: true }
     );
 
-    return ok({ message: "Alert updated.", alert });
+    return ok({ message: 'Alert updated.', alert });
   } catch (err) {
-    console.error("Alerts update error:", err);
-    return fail("Internal Server Error.", 500);
+    console.error('Alerts update error:', err);
+    return fail('Internal Server Error.', 500);
   }
 }
 
@@ -103,14 +99,14 @@ export async function DELETE(req) {
     if (response) return response;
 
     const { id } = await req.json();
-    if (!id) return fail("Alert id is required.");
+    if (!id) return fail('Alert id is required.');
 
     await connectDB();
     await Alert.deleteOne({ _id: id, user: user._id });
 
-    return ok({ message: "Alert removed." });
+    return ok({ message: 'Alert removed.' });
   } catch (err) {
-    console.error("Alerts delete error:", err);
-    return fail("Internal Server Error.", 500);
+    console.error('Alerts delete error:', err);
+    return fail('Internal Server Error.', 500);
   }
 }

@@ -1,5 +1,5 @@
-import YahooFinance from "yahoo-finance2";
-import { getHistoricalData } from "@/lib/getHistoricalData";
+import YahooFinance from 'yahoo-finance2';
+import { getHistoricalData } from '@/lib/getHistoricalData';
 
 const yahooFinance = new YahooFinance();
 
@@ -13,8 +13,8 @@ export async function getQuote(symbol) {
   return {
     symbol: quote.symbol || symbol,
     name: quote.shortName || quote.longName || symbol,
-    exchange: quote.fullExchangeName || quote.exchange || "",
-    currency: quote.currency || "",
+    exchange: quote.fullExchangeName || quote.exchange || '',
+    currency: quote.currency || '',
     price,
     previousClose,
     change,
@@ -31,33 +31,18 @@ export async function getQuotes(symbols) {
     .filter(Boolean)
     .map((symbol) => symbol.toUpperCase());
 
-  const results = await Promise.allSettled(
-    cleanSymbols.map((symbol) => getQuote(symbol)),
-  );
+  const results = await Promise.allSettled(cleanSymbols.map((symbol) => getQuote(symbol)));
 
-  return results
-    .filter((result) => result.status === "fulfilled")
-    .map((result) => result.value);
+  return results.filter((result) => result.status === 'fulfilled').map((result) => result.value);
 }
 
 export async function getMarketOverview() {
-  const indices = await getQuotes(["^GSPC", "^IXIC", "^DJI", "^NSEI", "^BSESN"]);
-  const movers = await getQuotes([
-    "AAPL",
-    "MSFT",
-    "NVDA",
-    "TSLA",
-    "AMZN",
-    "GOOG",
-    "META",
-    "NFLX",
-  ]);
+  const indices = await getQuotes(['^GSPC', '^IXIC', '^DJI', '^NSEI', '^BSESN']);
+  const movers = await getQuotes(['AAPL', 'MSFT', 'NVDA', 'TSLA', 'AMZN', 'GOOG', 'META', 'NFLX']);
 
   return {
     indices,
-    movers: movers.sort(
-      (a, b) => Math.abs(b.changePercent || 0) - Math.abs(a.changePercent || 0),
-    ),
+    movers: movers.sort((a, b) => Math.abs(b.changePercent || 0) - Math.abs(a.changePercent || 0)),
   };
 }
 
@@ -99,8 +84,8 @@ export async function buildTechnicalSnapshot(symbol) {
   const start = new Date(today.getTime() - 90 * 24 * 60 * 60 * 1000);
   const data = await getHistoricalData(
     symbol,
-    start.toISOString().split("T")[0],
-    today.toISOString().split("T")[0],
+    start.toISOString().split('T')[0],
+    today.toISOString().split('T')[0]
   );
 
   if (!data?.length) return null;
@@ -110,11 +95,9 @@ export async function buildTechnicalSnapshot(symbol) {
   const latest = closes.at(-1);
   const first = closes[0];
   const average20 =
-    closes.slice(-20).reduce((sum, value) => sum + value, 0) /
-    Math.min(closes.length, 20);
+    closes.slice(-20).reduce((sum, value) => sum + value, 0) / Math.min(closes.length, 20);
   const averageVolume20 =
-    volumes.slice(-20).reduce((sum, value) => sum + value, 0) /
-    Math.min(volumes.length, 20);
+    volumes.slice(-20).reduce((sum, value) => sum + value, 0) / Math.min(volumes.length, 20);
   const high90 = Math.max(...closes);
   const low90 = Math.min(...closes);
 
@@ -126,9 +109,6 @@ export async function buildTechnicalSnapshot(symbol) {
     averageVolume20,
     high90,
     low90,
-    trend:
-      latest > average20
-        ? "trading above 20-day average"
-        : "trading below 20-day average",
+    trend: latest > average20 ? 'trading above 20-day average' : 'trading below 20-day average',
   };
 }

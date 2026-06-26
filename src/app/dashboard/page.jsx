@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const services = [
-  ["Portfolio", "/portfolio", "Track holdings, live value, and P&L."],
-  ["Watchlist", "/watchlist", "Save symbols and monitor live quotes."],
-  ["Alerts", "/alerts", "Create target-price rules."],
-  ["Paper Trading", "/simulator", "Log simulated buy and sell orders."],
-  ["AI Insights", "/insights", "Generate concise Gemini-backed summaries."],
-  ["Prediction", "/predict", "Use the existing ML prediction workflow."],
+  ['Portfolio', '/portfolio', 'Track holdings, live value, and P&L.'],
+  ['Watchlist', '/watchlist', 'Save symbols and monitor live quotes.'],
+  ['Alerts', '/alerts', 'Create target-price rules.'],
+  ['Paper Trading', '/simulator', 'Log simulated buy and sell orders.'],
+  ['AI Insights', '/insights', 'Generate concise Gemini-backed summaries.'],
+  ['Prediction', '/predict', 'Use the existing ML prediction workflow.'],
 ];
 
 export default function DashboardPage() {
@@ -18,10 +18,10 @@ export default function DashboardPage() {
   useEffect(() => {
     async function load() {
       const [meRes, portfolioRes, watchlistRes, alertsRes] = await Promise.all([
-        fetch("/api/auth/me"),
-        fetch("/api/portfolio"),
-        fetch("/api/watchlist"),
-        fetch("/api/alerts"),
+        fetch('/api/auth/me'),
+        fetch('/api/portfolio'),
+        fetch('/api/watchlist'),
+        fetch('/api/alerts'),
       ]);
 
       const [me, portfolio, watchlist, alerts] = await Promise.all([
@@ -91,16 +91,16 @@ function Metric({ label, value }) {
   return (
     <div className="rounded-xl border border-gray-800 bg-gray-900 p-5">
       <p className="text-sm text-gray-500">{label}</p>
-      <p className="mt-2 text-2xl font-bold text-white">{value ?? "--"}</p>
+      <p className="mt-2 text-2xl font-bold text-white">{value ?? '--'}</p>
     </div>
   );
 }
 
 function formatMoney(value) {
-  if (!Number.isFinite(value)) return "--";
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
+  if (!Number.isFinite(value)) return '--';
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
     maximumFractionDigits: 2,
   }).format(value);
 }

@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { getHistoricalData } from "@/lib/getHistoricalData";
+import { NextResponse } from 'next/server';
+import { getHistoricalData } from '@/lib/getHistoricalData';
 
 export async function POST(req) {
   try {
@@ -9,9 +9,9 @@ export async function POST(req) {
       return NextResponse.json(
         {
           success: false,
-          message: "Name, Symbol, Period 1 & 2 are all required.",
+          message: 'Name, Symbol, Period 1 & 2 are all required.',
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -21,23 +21,23 @@ export async function POST(req) {
       return NextResponse.json(
         {
           success: false,
-          message: "No stock data found for the given period.",
+          message: 'No stock data found for the given period.',
         },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: "Stock data fetched successfully.",
+      message: 'Stock data fetched successfully.',
       symbol,
       data,
     });
   } catch (err) {
-    console.error("🔥 Stock API error:", err);
+    console.error('🔥 Stock API error:', err);
     return NextResponse.json(
-      { success: false, message: "Internal Server Error." },
-      { status: 500 },
+      { success: false, message: 'Internal Server Error.' },
+      { status: 500 }
     );
   }
 }

@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const AlertSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true,
     },
@@ -18,7 +18,7 @@ const AlertSchema = new mongoose.Schema(
     name: {
       type: String,
       trim: true,
-      default: "",
+      default: '',
     },
     targetPrice: {
       type: Number,
@@ -27,7 +27,7 @@ const AlertSchema = new mongoose.Schema(
     },
     direction: {
       type: String,
-      enum: ["above", "below"],
+      enum: ['above', 'below'],
       required: true,
     },
     isActive: {
@@ -39,9 +39,9 @@ const AlertSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 AlertSchema.index({ user: 1, symbol: 1, isActive: 1 });
 
-export default mongoose.models.Alert || mongoose.model("Alert", AlertSchema);
+export default mongoose.models.Alert || mongoose.model('Alert', AlertSchema);

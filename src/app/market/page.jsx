@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function MarketPage() {
   const [state, setState] = useState({ loading: true });
 
   useEffect(() => {
-    fetch("/api/market/overview")
+    fetch('/api/market/overview')
       .then((res) => res.json())
       .then((json) => setState({ loading: false, data: json }))
       .catch(() => setState({ loading: false, error: true }));
@@ -17,7 +17,9 @@ export default function MarketPage() {
   return (
     <section className="mx-auto max-w-6xl px-4 py-10 text-gray-100">
       <h1 className="text-3xl font-bold">Market Overview</h1>
-      <p className="mt-2 text-sm text-gray-400">Global indices and large-cap movers from Yahoo Finance.</p>
+      <p className="mt-2 text-sm text-gray-400">
+        Global indices and large-cap movers from Yahoo Finance.
+      </p>
 
       {state.loading && <p className="mt-8 text-gray-400">Loading market data...</p>}
       {state.error && <p className="mt-8 text-red-400">Unable to load market data.</p>}
@@ -44,7 +46,7 @@ function QuoteGrid({ title, quotes }) {
                 <p className="font-semibold text-white">{quote.symbol}</p>
                 <p className="truncate text-sm text-gray-500">{quote.name}</p>
               </div>
-              <p className={quote.changePercent >= 0 ? "text-emerald-400" : "text-red-400"}>
+              <p className={quote.changePercent >= 0 ? 'text-emerald-400' : 'text-red-400'}>
                 {formatPercent(quote.changePercent)}
               </p>
             </div>
@@ -57,11 +59,11 @@ function QuoteGrid({ title, quotes }) {
 }
 
 function formatNumber(value) {
-  if (!Number.isFinite(value)) return "--";
+  if (!Number.isFinite(value)) return '--';
   return value.toFixed(2);
 }
 
 function formatPercent(value) {
-  if (!Number.isFinite(value)) return "--";
-  return `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`;
+  if (!Number.isFinite(value)) return '--';
+  return `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`;
 }

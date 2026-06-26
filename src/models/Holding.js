@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const HoldingSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true,
     },
@@ -18,7 +18,7 @@ const HoldingSchema = new mongoose.Schema(
     name: {
       type: String,
       trim: true,
-      default: "",
+      default: '',
     },
     quantity: {
       type: Number,
@@ -37,18 +37,17 @@ const HoldingSchema = new mongoose.Schema(
     broker: {
       type: String,
       trim: true,
-      default: "Manual",
+      default: 'Manual',
     },
     notes: {
       type: String,
       trim: true,
-      default: "",
+      default: '',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 HoldingSchema.index({ user: 1, symbol: 1 });
 
-export default mongoose.models.Holding ||
-  mongoose.model("Holding", HoldingSchema);
+export default mongoose.models.Holding || mongoose.model('Holding', HoldingSchema);

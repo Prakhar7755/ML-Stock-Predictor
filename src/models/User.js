@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -21,11 +21,11 @@ const UserSchema = new mongoose.Schema(
     },
     riskProfile: {
       type: String,
-      enum: ["conservative", "balanced", "aggressive"],
-      default: "balanced",
+      enum: ['conservative', 'balanced', 'aggressive'],
+      default: 'balanced',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+export default mongoose.models.User || mongoose.model('User', UserSchema);

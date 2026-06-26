@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
-import "@/lib/chartjs";
+import { useEffect, useState } from 'react';
+import { Line } from 'react-chartjs-2';
+import '@/lib/chartjs';
 
 export default function PredictPage() {
   const [companies, setCompanies] = useState([]);
   const [companiesLoading, setCompaniesLoading] = useState(true);
 
-  const [selectedCompany, setSelectedCompany] = useState("");
-  const [symbol, setSymbol] = useState("");
-  const [customCompany, setCustomCompany] = useState("");
-  const [customSymbol, setCustomSymbol] = useState("");
+  const [selectedCompany, setSelectedCompany] = useState('');
+  const [symbol, setSymbol] = useState('');
+  const [customCompany, setCustomCompany] = useState('');
+  const [customSymbol, setCustomSymbol] = useState('');
 
-  const [period1, setPeriod1] = useState("");
+  const [period1, setPeriod1] = useState('');
   const [period2, setPeriod2] = useState(
-    new Date(Date.now() - 86400000).toISOString().split("T")[0],
+    new Date(Date.now() - 86400000).toISOString().split('T')[0]
   );
 
-  const [method, setMethod] = useState("linear-regression");
+  const [method, setMethod] = useState('linear-regression');
   const [loading, setLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [chartData, setChartData] = useState(null);
@@ -27,11 +27,11 @@ export default function PredictPage() {
   useEffect(() => {
     async function fetchCompanies() {
       try {
-        const res = await fetch("/api/company");
+        const res = await fetch('/api/company');
         const data = await res.json();
         if (data?.success) setCompanies(data.companies);
       } catch (err) {
-        console.error("Company fetch failed", err);
+        console.error('Company fetch failed', err);
       } finally {
         setCompaniesLoading(false);
       }
@@ -44,36 +44,31 @@ export default function PredictPage() {
     const value = e.target.value;
     setSelectedCompany(value);
 
-    if (value === "__custom__") {
-      setSymbol("");
+    if (value === '__custom__') {
+      setSymbol('');
     } else {
       const found = companies.find((c) => c.name === value);
-      setSymbol(found?.symbol || "");
+      setSymbol(found?.symbol || '');
     }
   }
 
   /* -------------------- Analyze -------------------- */
   async function handleAnalyze() {
-    const name =
-      selectedCompany === "__custom__" ? customCompany.trim() : selectedCompany;
-    const sym =
-      selectedCompany === "__custom__"
-        ? customSymbol.trim().toUpperCase()
-        : symbol;
+    const name = selectedCompany === '__custom__' ? customCompany.trim() : selectedCompany;
+    const sym = selectedCompany === '__custom__' ? customSymbol.trim().toUpperCase() : symbol;
 
-    if (!name || !sym || !period1 || !period2) return alert("Missing fields");
+    if (!name || !sym || !period1 || !period2) return alert('Missing fields');
 
-    if (new Date(period1) >= new Date(period2))
-      return alert("Invalid date range");
+    if (new Date(period1) >= new Date(period2)) return alert('Invalid date range');
 
     setLoading(true);
     setAnalysisResult(null);
     setChartData(null);
 
     try {
-      const stockRes = await fetch("/api/stock", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const stockRes = await fetch('/api/stock', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name,
           symbol: sym,
@@ -88,9 +83,9 @@ export default function PredictPage() {
       const labels = historical.map((d) => d.date);
       const prices = historical.map((d) => d.close);
 
-      const predictRes = await fetch("/api/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const predictRes = await fetch('/api/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           symbol: sym,
           data: historical,
@@ -105,16 +100,16 @@ export default function PredictPage() {
       nextDate.setDate(nextDate.getDate() + 1);
 
       setChartData({
-        labels: [...labels, nextDate.toISOString().split("T")[0]],
+        labels: [...labels, nextDate.toISOString().split('T')[0]],
         datasets: [
           {
-            label: "Close Price",
+            label: 'Close Price',
             data: [...prices, predicted],
-            borderColor: "#10b981",
-            backgroundColor: "rgba(16, 185, 129, 0.1)",
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
             tension: 0.35,
             pointBackgroundColor: prices.map((_, i) =>
-              i === prices.length ? "#ef4444" : "#10b981",
+              i === prices.length ? '#ef4444' : '#10b981'
             ),
           },
         ],
@@ -123,7 +118,7 @@ export default function PredictPage() {
       setAnalysisResult(`Predicted price for ${name} (${sym}): ${predicted}`);
     } catch (err) {
       console.error(err);
-      alert("Prediction failed");
+      alert('Prediction failed');
     } finally {
       setLoading(false);
     }
@@ -155,7 +150,7 @@ export default function PredictPage() {
             </select>
           </Field>
 
-          {selectedCompany === "__custom__" && (
+          {selectedCompany === '__custom__' && (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <Field label="Company Name">
                 <input
@@ -182,9 +177,7 @@ export default function PredictPage() {
             >
               <option value="linear-regression">Linear Regression</option>
               <option value="average">Average</option>
-              <option value="polynomial-regression">
-                Polynomial Regression
-              </option>
+              <option value="polynomial-regression">Polynomial Regression</option>
             </select>
           </Field>
 
@@ -212,15 +205,13 @@ export default function PredictPage() {
             disabled={loading}
             className="mt-4 rounded-lg bg-emerald-600 py-3 font-semibold text-white shadow-lg transition-all hover:bg-emerald-500 hover:shadow-emerald-500/20 disabled:opacity-50"
           >
-            {loading ? "Analyzing…" : "Analyze"}
+            {loading ? 'Analyzing…' : 'Analyze'}
           </button>
         </div>
       </div>
 
       {analysisResult && (
-        <p className="mt-8 text-center text-lg font-medium text-emerald-400">
-          {analysisResult}
-        </p>
+        <p className="mt-8 text-center text-lg font-medium text-emerald-400">{analysisResult}</p>
       )}
 
       {chartData && (

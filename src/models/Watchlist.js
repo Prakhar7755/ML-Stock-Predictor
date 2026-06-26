@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const WatchlistItemSchema = new mongoose.Schema(
   {
@@ -11,26 +11,26 @@ const WatchlistItemSchema = new mongoose.Schema(
     name: {
       type: String,
       trim: true,
-      default: "",
+      default: '',
     },
     notes: {
       type: String,
       trim: true,
-      default: "",
+      default: '',
     },
     addedAt: {
       type: Date,
       default: Date.now,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 const WatchlistSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true,
     },
@@ -38,17 +38,16 @@ const WatchlistSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      default: "Primary Watchlist",
+      default: 'Primary Watchlist',
     },
     items: {
       type: [WatchlistItemSchema],
       default: [],
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 WatchlistSchema.index({ user: 1, name: 1 }, { unique: true });
 
-export default mongoose.models.Watchlist ||
-  mongoose.model("Watchlist", WatchlistSchema);
+export default mongoose.models.Watchlist || mongoose.model('Watchlist', WatchlistSchema);

@@ -1,7 +1,7 @@
-import { connectDB } from "@/lib/db";
-import { fail, ok, requireUser } from "@/lib/api";
-import Holding from "@/models/Holding";
-import { calculatePortfolioMetrics, getQuotes } from "@/lib/market";
+import { connectDB } from '@/lib/db';
+import { fail, ok, requireUser } from '@/lib/api';
+import Holding from '@/models/Holding';
+import { calculatePortfolioMetrics, getQuotes } from '@/lib/market';
 
 export async function GET() {
   try {
@@ -15,8 +15,8 @@ export async function GET() {
 
     return ok({ portfolio });
   } catch (err) {
-    console.error("Portfolio fetch error:", err);
-    return fail("Internal Server Error.", 500);
+    console.error('Portfolio fetch error:', err);
+    return fail('Internal Server Error.', 500);
   }
 }
 
@@ -27,16 +27,16 @@ export async function POST(req) {
 
     const {
       symbol,
-      name = "",
+      name = '',
       quantity,
       averageBuyPrice,
       boughtAt,
-      broker = "Manual",
-      notes = "",
+      broker = 'Manual',
+      notes = '',
     } = await req.json();
 
     if (!symbol?.trim() || Number(quantity) <= 0 || Number(averageBuyPrice) <= 0) {
-      return fail("Symbol, quantity, and average buy price are required.");
+      return fail('Symbol, quantity, and average buy price are required.');
     }
 
     await connectDB();
@@ -51,10 +51,10 @@ export async function POST(req) {
       notes: notes.trim(),
     });
 
-    return ok({ message: "Holding added.", holding }, { status: 201 });
+    return ok({ message: 'Holding added.', holding }, { status: 201 });
   } catch (err) {
-    console.error("Portfolio create error:", err);
-    return fail("Internal Server Error.", 500);
+    console.error('Portfolio create error:', err);
+    return fail('Internal Server Error.', 500);
   }
 }
 
@@ -64,14 +64,14 @@ export async function DELETE(req) {
     if (response) return response;
 
     const { id } = await req.json();
-    if (!id) return fail("Holding id is required.");
+    if (!id) return fail('Holding id is required.');
 
     await connectDB();
     await Holding.deleteOne({ _id: id, user: user._id });
 
-    return ok({ message: "Holding removed." });
+    return ok({ message: 'Holding removed.' });
   } catch (err) {
-    console.error("Portfolio delete error:", err);
-    return fail("Internal Server Error.", 500);
+    console.error('Portfolio delete error:', err);
+    return fail('Internal Server Error.', 500);
   }
 }

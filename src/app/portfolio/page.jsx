@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function PortfolioPage() {
-  const [form, setForm] = useState({ symbol: "", name: "", quantity: "", averageBuyPrice: "" });
+  const [form, setForm] = useState({ symbol: '', name: '', quantity: '', averageBuyPrice: '' });
   const [state, setState] = useState({ loading: true });
 
   async function fetchPortfolio() {
-    const res = await fetch("/api/portfolio");
+    const res = await fetch('/api/portfolio');
     return res.json();
   }
 
@@ -36,19 +36,19 @@ export default function PortfolioPage() {
 
   async function submit(e) {
     e.preventDefault();
-    await fetch("/api/portfolio", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    await fetch('/api/portfolio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     });
-    setForm({ symbol: "", name: "", quantity: "", averageBuyPrice: "" });
+    setForm({ symbol: '', name: '', quantity: '', averageBuyPrice: '' });
     await load();
   }
 
   async function remove(id) {
-    await fetch("/api/portfolio", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+    await fetch('/api/portfolio', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     });
     await load();
@@ -61,16 +61,43 @@ export default function PortfolioPage() {
       <h1 className="text-3xl font-bold">Portfolio</h1>
       <p className="mt-2 text-sm text-gray-400">User-owned holdings with live quote based P&L.</p>
 
-      <form onSubmit={submit} className="mt-8 grid gap-3 rounded-xl border border-gray-800 bg-gray-900 p-5 md:grid-cols-5">
-        <input placeholder="Symbol" className="input" value={form.symbol} onChange={(e) => setForm({ ...form, symbol: e.target.value })} />
-        <input placeholder="Name" className="input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-        <input placeholder="Quantity" type="number" className="input" value={form.quantity} onChange={(e) => setForm({ ...form, quantity: e.target.value })} />
-        <input placeholder="Avg buy price" type="number" className="input" value={form.averageBuyPrice} onChange={(e) => setForm({ ...form, averageBuyPrice: e.target.value })} />
+      <form
+        onSubmit={submit}
+        className="mt-8 grid gap-3 rounded-xl border border-gray-800 bg-gray-900 p-5 md:grid-cols-5"
+      >
+        <input
+          placeholder="Symbol"
+          className="input"
+          value={form.symbol}
+          onChange={(e) => setForm({ ...form, symbol: e.target.value })}
+        />
+        <input
+          placeholder="Name"
+          className="input"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+        <input
+          placeholder="Quantity"
+          type="number"
+          className="input"
+          value={form.quantity}
+          onChange={(e) => setForm({ ...form, quantity: e.target.value })}
+        />
+        <input
+          placeholder="Avg buy price"
+          type="number"
+          className="input"
+          value={form.averageBuyPrice}
+          onChange={(e) => setForm({ ...form, averageBuyPrice: e.target.value })}
+        />
         <button className="rounded-lg bg-emerald-600 px-4 py-3 font-semibold">Add Holding</button>
       </form>
 
       {state.loading && <p className="mt-8 text-gray-400">Loading...</p>}
-      {state.data && !state.data.success && <p className="mt-8 text-red-400">{state.data.message}</p>}
+      {state.data && !state.data.success && (
+        <p className="mt-8 text-red-400">{state.data.message}</p>
+      )}
 
       {portfolio && (
         <>
@@ -99,9 +126,16 @@ export default function PortfolioPage() {
                     <td className="p-3">{item.quantity}</td>
                     <td className="p-3">{money(item.averageBuyPrice)}</td>
                     <td className="p-3">{money(item.currentPrice)}</td>
-                    <td className={item.pnl >= 0 ? "p-3 text-emerald-400" : "p-3 text-red-400"}>{money(item.pnl)}</td>
+                    <td className={item.pnl >= 0 ? 'p-3 text-emerald-400' : 'p-3 text-red-400'}>
+                      {money(item.pnl)}
+                    </td>
                     <td className="p-3 text-right">
-                      <button onClick={() => remove(item.id)} className="text-gray-400 hover:text-red-400">Remove</button>
+                      <button
+                        onClick={() => remove(item.id)}
+                        className="text-gray-400 hover:text-red-400"
+                      >
+                        Remove
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -124,6 +158,6 @@ function Metric({ label, value }) {
 }
 
 function money(value) {
-  if (!Number.isFinite(value)) return "--";
+  if (!Number.isFinite(value)) return '--';
   return `$${value.toFixed(2)}`;
 }

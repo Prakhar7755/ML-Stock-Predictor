@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const PaperOrderSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true,
     },
@@ -18,11 +18,11 @@ const PaperOrderSchema = new mongoose.Schema(
     name: {
       type: String,
       trim: true,
-      default: "",
+      default: '',
     },
     side: {
       type: String,
-      enum: ["buy", "sell"],
+      enum: ['buy', 'sell'],
       required: true,
     },
     quantity: {
@@ -37,8 +37,8 @@ const PaperOrderSchema = new mongoose.Schema(
     },
     orderType: {
       type: String,
-      enum: ["market", "limit"],
-      default: "market",
+      enum: ['market', 'limit'],
+      default: 'market',
     },
     executedAt: {
       type: Date,
@@ -47,13 +47,12 @@ const PaperOrderSchema = new mongoose.Schema(
     notes: {
       type: String,
       trim: true,
-      default: "",
+      default: '',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 PaperOrderSchema.index({ user: 1, executedAt: -1 });
 
-export default mongoose.models.PaperOrder ||
-  mongoose.model("PaperOrder", PaperOrderSchema);
+export default mongoose.models.PaperOrder || mongoose.model('PaperOrder', PaperOrderSchema);

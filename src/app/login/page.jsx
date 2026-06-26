@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [mode, setMode] = useState("login");
+  const [mode, setMode] = useState('login');
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    riskProfile: "balanced",
+    name: '',
+    email: '',
+    password: '',
+    riskProfile: 'balanced',
   });
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   function update(field, value) {
@@ -22,22 +22,22 @@ export default function LoginPage() {
   async function submit(e) {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
+    setMessage('');
 
-    const res = await fetch(`/api/auth/${mode === "login" ? "login" : "register"}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const res = await fetch(`/api/auth/${mode === 'login' ? 'login' : 'register'}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     });
     const json = await res.json();
 
     setLoading(false);
     if (!json.success) {
-      setMessage(json.message || "Request failed.");
+      setMessage(json.message || 'Request failed.');
       return;
     }
 
-    router.push("/dashboard");
+    router.push('/dashboard');
   }
 
   return (
@@ -49,15 +49,13 @@ export default function LoginPage() {
 
       <div className="mt-8 rounded-xl border border-gray-800 bg-gray-900 p-6">
         <div className="mb-6 grid grid-cols-2 rounded-lg bg-gray-950 p-1">
-          {["login", "register"].map((item) => (
+          {['login', 'register'].map((item) => (
             <button
               key={item}
               type="button"
               onClick={() => setMode(item)}
               className={`rounded-md px-4 py-2 text-sm font-medium capitalize ${
-                mode === item
-                  ? "bg-emerald-600 text-white"
-                  : "text-gray-400 hover:text-white"
+                mode === item ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:text-white'
               }`}
             >
               {item}
@@ -66,19 +64,19 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={submit} className="grid gap-4">
-          {mode === "register" && (
+          {mode === 'register' && (
             <>
               <Field label="Name">
                 <input
                   value={form.name}
-                  onChange={(e) => update("name", e.target.value)}
+                  onChange={(e) => update('name', e.target.value)}
                   className="input"
                 />
               </Field>
               <Field label="Risk Profile">
                 <select
                   value={form.riskProfile}
-                  onChange={(e) => update("riskProfile", e.target.value)}
+                  onChange={(e) => update('riskProfile', e.target.value)}
                   className="input"
                 >
                   <option value="conservative">Conservative</option>
@@ -93,7 +91,7 @@ export default function LoginPage() {
             <input
               type="email"
               value={form.email}
-              onChange={(e) => update("email", e.target.value)}
+              onChange={(e) => update('email', e.target.value)}
               className="input"
             />
           </Field>
@@ -101,7 +99,7 @@ export default function LoginPage() {
             <input
               type="password"
               value={form.password}
-              onChange={(e) => update("password", e.target.value)}
+              onChange={(e) => update('password', e.target.value)}
               className="input"
             />
           </Field>
@@ -112,7 +110,7 @@ export default function LoginPage() {
             disabled={loading}
             className="rounded-lg bg-emerald-600 px-4 py-3 font-semibold text-white hover:bg-emerald-500 disabled:opacity-50"
           >
-            {loading ? "Please wait..." : mode === "login" ? "Login" : "Create Account"}
+            {loading ? 'Please wait...' : mode === 'login' ? 'Login' : 'Create Account'}
           </button>
         </form>
       </div>

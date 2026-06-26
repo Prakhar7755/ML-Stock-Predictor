@@ -1,13 +1,13 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/market", label: "Markets" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/watchlist", label: "Watchlist" },
-  { href: "/alerts", label: "Alerts" },
-  { href: "/simulator", label: "Simulator" },
-  { href: "/insights", label: "AI" },
+  { href: '/dashboard', label: 'Dashboard' },
+  { href: '/market', label: 'Markets' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/watchlist', label: 'Watchlist' },
+  { href: '/alerts', label: 'Alerts' },
+  { href: '/simulator', label: 'Simulator' },
+  { href: '/insights', label: 'AI' },
 ];
 
 export default function Navbar() {

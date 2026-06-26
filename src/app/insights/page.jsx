@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function InsightsPage() {
-  const [symbol, setSymbol] = useState("AAPL");
+  const [symbol, setSymbol] = useState('AAPL');
   const [state, setState] = useState({});
 
   async function submit(e) {
     e.preventDefault();
     setState({ loading: true });
 
-    const res = await fetch("/api/insights", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const res = await fetch('/api/insights', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ symbol }),
     });
     const json = await res.json();
@@ -32,7 +32,9 @@ export default function InsightsPage() {
       </form>
 
       {state.loading && <p className="mt-8 text-gray-400">Generating...</p>}
-      {state.data && !state.data.success && <p className="mt-8 text-red-400">{state.data.message}</p>}
+      {state.data && !state.data.success && (
+        <p className="mt-8 text-red-400">{state.data.message}</p>
+      )}
 
       {state.data?.success && (
         <div className="mt-8 rounded-xl border border-gray-800 bg-gray-900 p-6">
