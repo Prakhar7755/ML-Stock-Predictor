@@ -36,7 +36,7 @@ A modern stock analysis dashboard built with **Next.js**, **React**, and **Tailw
 1. Install dependencies:
 
 ```bash
-pnpm install
+npm install
 ```
 
 2. Create a `.env` file in the project root and configure required values:
@@ -51,14 +51,14 @@ GEMINI_API_KEY=your-google-gemini-api-key
 3. Start the development server:
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 4. Build for production:
 
 ```bash
-pnpm build
-pnpm start
+npm run build
+npm run start
 ```
 
 ## Environment Variables
@@ -86,10 +86,10 @@ pnpm start
 
 ## Scripts
 
-- `pnpm dev` — run the Next.js development server
-- `pnpm build` — build the app for production
-- `pnpm start` — launch the production server
-- `pnpm lint` — run ESLint
+- `npm run dev` — run the Next.js development server
+- `npm run build` — build the app for production
+- `npm run start` — launch the production server
+- `npm run lint` — run ESLint
 
 ## License
 

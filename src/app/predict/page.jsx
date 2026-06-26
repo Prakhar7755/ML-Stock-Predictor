@@ -13,10 +13,13 @@ export default function PredictPage() {
   const [customCompany, setCustomCompany] = useState('');
   const [customSymbol, setCustomSymbol] = useState('');
 
-  const [period1, setPeriod1] = useState('');
-  const [period2, setPeriod2] = useState(
-    new Date(Date.now() - 86400000).toISOString().split('T')[0]
-  );
+  const [period1, setPeriod1] = useState(() => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    return yesterday.toISOString().split('T')[0];
+  });
+  const [period2, setPeriod2] = useState(() => new Date().toISOString().split('T')[0]);
 
   const [method, setMethod] = useState('linear-regression');
   const [loading, setLoading] = useState(false);

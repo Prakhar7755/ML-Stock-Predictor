@@ -1,7 +1,7 @@
 import { fail, ok, requireUser } from '@/lib/api';
 import { buildTechnicalSnapshot } from '@/lib/market';
 
-function fallbackInsight(snapshot, riskProfile, reason) {
+export function fallbackInsight(snapshot, riskProfile, reason) {
   const trend = snapshot.trend;
   const rangePosition =
     snapshot.high90 === snapshot.low90
@@ -38,20 +38,17 @@ export async function POST(req) {
       snapshot
     )}. User risk profile: ${user.riskProfile}. Include risks and avoid telling the user to buy or sell.`;
 
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.35,
-            maxOutputTokens: 220,
-          },
-        }),
-      }
-    );
+    const geminiRes = await fetch('https://generativelanguage.googleapis.com/v1beta/interactions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': process.env.GEMINI_API_KEY,
+      },
+      body: JSON.stringify({
+        model: 'gemini-3.5-flash',
+        input: prompt,
+      }),
+    });
 
     if (!geminiRes.ok) {
       return ok({
@@ -63,7 +60,7 @@ export async function POST(req) {
 
     const geminiJson = await geminiRes.json();
     const insight =
-      geminiJson?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      geminiJson?.output_text ||
       fallbackInsight(snapshot, user.riskProfile, 'Gemini did not return valid text.');
 
     return ok({
