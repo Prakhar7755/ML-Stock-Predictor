@@ -1,5 +1,15 @@
 import Link from "next/link";
 
+const navItems = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/market", label: "Markets" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/watchlist", label: "Watchlist" },
+  { href: "/alerts", label: "Alerts" },
+  { href: "/simulator", label: "Simulator" },
+  { href: "/insights", label: "AI" },
+];
+
 export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-gray-800 bg-gray-950/80 backdrop-blur-md">
@@ -29,13 +39,32 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* CTA */}
-        <Link
-          href="/predict"
-          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-emerald-500 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]"
-        >
-          Launch App
-        </Link>
+        <nav className="hidden items-center gap-1 lg:flex">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-md px-3 py-2 text-sm font-medium text-gray-400 transition-colors hover:bg-gray-900 hover:text-white"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <Link
+            href="/predict"
+            className="hidden rounded-lg border border-gray-800 px-4 py-2 text-sm font-medium text-gray-200 transition-all hover:bg-gray-900 md:block"
+          >
+            Predict
+          </Link>
+          <Link
+            href="/login"
+            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-emerald-500 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]"
+          >
+            Account
+          </Link>
+        </div>
       </div>
     </header>
   );
