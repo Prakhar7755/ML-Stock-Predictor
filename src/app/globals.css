@@ -1,9 +1,29 @@
 @import 'tailwindcss';
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html,
 body {
-  @apply bg-gray-50 text-gray-800;
+  @apply font-sans bg-gray-950 text-gray-100 antialiased;
+  font-family: 'Inter', sans-serif;
 }
 
+/* Design tokens */
+:root {
+  --color-primary: #6366f1; /* Indigo */
+  --color-accent: #22d3ee; /* Cyan */
+  --color-positive: #10b981; /* Emerald */
+  --color-negative: #ef4444; /* Rose */
+  --color-warning: #f59e0b; /* Amber */
+  --border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Input styles */
 .input {
-  @apply w-full rounded-lg border border-gray-800 bg-gray-950 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-emerald-500;
+  @apply w-full rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-emerald-500;
+}
+
+/* Glass panel utility */
+.glass-panel {
+  @apply bg-gray-900/60 backdrop-blur-md border border-gray-800 rounded-xl;
 }
