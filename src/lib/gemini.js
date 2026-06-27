@@ -16,7 +16,7 @@ You MUST respond with a JSON object matching this schema exactly. Do not add any
   "summary": "1-2 sentence educational summary of the stock's current movement and momentum based on the technical data.",
   "metrics": [
     { "label": "Current Price", "value": "$${snapshot.latest.toFixed(2)}" },
-    { "label": "20-Day MA", "value": "$${(snapshot.latest - (snapshot.latest * 0.05)).toFixed(2)} (or actual 20-day MA value if estimated)" },
+    { "label": "20-Day MA", "value": "$${(snapshot.latest - snapshot.latest * 0.05).toFixed(2)} (or actual 20-day MA value if estimated)" },
     { "label": "90-Day Return", "value": "${snapshot.return90d.toFixed(2)}%" }
   ],
   "highlights": [
@@ -38,11 +38,11 @@ You MUST respond with a JSON object matching this schema exactly. Do not add any
 
   // Prioritized list of models that are active and not disabled (quota limit 0)
   const models = [
-    'gemini-flash-latest',       // Points to stable 1.5-flash
+    'gemini-flash-latest', // Points to stable 1.5-flash
     'gemini-3.1-flash-lite',
     'gemini-2.5-flash-lite',
     'gemini-3.5-flash',
-    'gemini-flash-lite-latest'
+    'gemini-flash-lite-latest',
   ];
   let lastError = null;
 
@@ -68,8 +68,8 @@ You MUST respond with a JSON object matching this schema exactly. Do not add any
             },
           ],
           generationConfig: {
-            responseMimeType: "application/json"
-          }
+            responseMimeType: 'application/json',
+          },
         }),
         signal: controller.signal,
       });
@@ -100,12 +100,13 @@ You MUST respond with a JSON object matching this schema exactly. Do not add any
           insight: {
             summary: text,
             metrics: [
-              { label: "Current Price", value: `$${snapshot.latest.toFixed(2)}` },
-              { label: "90-Day Return", value: `${snapshot.return90d.toFixed(2)}%` }
+              { label: 'Current Price', value: `$${snapshot.latest.toFixed(2)}` },
+              { label: '90-Day Return', value: `${snapshot.return90d.toFixed(2)}%` },
             ],
             highlights: [],
             risks: [],
-            disclaimer: "This analysis is for educational purposes only and does not constitute financial, investment, or trading advice."
+            disclaimer:
+              'This analysis is for educational purposes only and does not constitute financial, investment, or trading advice.',
           },
           model: model,
         };
@@ -120,4 +121,3 @@ You MUST respond with a JSON object matching this schema exactly. Do not add any
 
   throw new Error(`All Gemini models failed. Last error: ${lastError?.message}`);
 }
-

@@ -12,19 +12,29 @@ export function fallbackInsight(snapshot, riskProfile, reason) {
   return {
     summary: `${snapshot.symbol} is currently ${trend} with a 90-day return of ${snapshot.return90d.toFixed(2)}%.`,
     metrics: [
-      { label: "Current Price", value: `$${snapshot.latest.toFixed(2)}` },
-      { label: "Trend", value: trend },
-      { label: "90-Day Return", value: `${snapshot.return90d.toFixed(2)}%` }
+      { label: 'Current Price', value: `$${snapshot.latest.toFixed(2)}` },
+      { label: 'Trend', value: trend },
+      { label: '90-Day Return', value: `${snapshot.return90d.toFixed(2)}%` },
     ],
     highlights: [
-      { title: "Range Position", value: `Trading around ${rangePosition.toFixed(0)}% of its 90-day range.` },
-      { title: "90-Day High / Low", value: `$${snapshot.low90.toFixed(2)} - $${snapshot.high90.toFixed(2)}` },
-      { title: "Fallback Note", value: reason }
+      {
+        title: 'Range Position',
+        value: `Trading around ${rangePosition.toFixed(0)}% of its 90-day range.`,
+      },
+      {
+        title: '90-Day High / Low',
+        value: `$${snapshot.low90.toFixed(2)} - $${snapshot.high90.toFixed(2)}`,
+      },
+      { title: 'Fallback Note', value: reason },
     ],
     risks: [
-      { title: "Position Size Advisory", description: `${riskProfile} risk profile investors should double-check stop-loss targets and limits.` }
+      {
+        title: 'Position Size Advisory',
+        description: `${riskProfile} risk profile investors should double-check stop-loss targets and limits.`,
+      },
     ],
-    disclaimer: "This is a deterministic technical fallback summary rather than a live Gemini response."
+    disclaimer:
+      'This is a deterministic technical fallback summary rather than a live Gemini response.',
   };
 }
 
