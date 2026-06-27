@@ -1,5 +1,6 @@
 import { fail, ok, requireUser } from '@/lib/api';
 import { buildTechnicalSnapshot } from '@/lib/market';
+import { generateInsight } from '@/lib/gemini';
 
 export function fallbackInsight(snapshot, riskProfile, reason) {
   const trend = snapshot.trend;
@@ -8,11 +9,23 @@ export function fallbackInsight(snapshot, riskProfile, reason) {
       ? 0
       : ((snapshot.latest - snapshot.low90) / (snapshot.high90 - snapshot.low90)) * 100;
 
-  return [
-    `${snapshot.symbol} is ${trend} with a 90-day return of ${snapshot.return90d.toFixed(2)}%.`,
-    `It is trading around ${rangePosition.toFixed(0)}% of its 90-day range, so ${riskProfile} investors should compare this with position size and stop-loss rules before acting.`,
-    `${reason} This is a deterministic technical summary rather than a Gemini response.`,
-  ].join(' ');
+  return {
+    summary: `${snapshot.symbol} is currently ${trend} with a 90-day return of ${snapshot.return90d.toFixed(2)}%.`,
+    metrics: [
+      { label: "Current Price", value: `$${snapshot.latest.toFixed(2)}` },
+      { label: "Trend", value: trend },
+      { label: "90-Day Return", value: `${snapshot.return90d.toFixed(2)}%` }
+    ],
+    highlights: [
+      { title: "Range Position", value: `Trading around ${rangePosition.toFixed(0)}% of its 90-day range.` },
+      { title: "90-Day High / Low", value: `$${snapshot.low90.toFixed(2)} - $${snapshot.high90.toFixed(2)}` },
+      { title: "Fallback Note", value: reason }
+    ],
+    risks: [
+      { title: "Position Size Advisory", description: `${riskProfile} risk profile investors should double-check stop-loss targets and limits.` }
+    ],
+    disclaimer: "This is a deterministic technical fallback summary rather than a live Gemini response."
+  };
 }
 
 export async function POST(req) {
@@ -34,40 +47,24 @@ export async function POST(req) {
       });
     }
 
-    const prompt = `You are an educational stock-market assistant. Give a concise, non-advisory analysis for ${snapshot.symbol}. Use this data: ${JSON.stringify(
-      snapshot
-    )}. User risk profile: ${user.riskProfile}. Include risks and avoid telling the user to buy or sell.`;
-
-    const geminiRes = await fetch('https://generativelanguage.googleapis.com/v1beta/interactions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': process.env.GEMINI_API_KEY,
-      },
-      body: JSON.stringify({
-        model: 'gemini-3.5-flash',
-        input: prompt,
-      }),
-    });
-
-    if (!geminiRes.ok) {
+    try {
+      const { insight, model } = await generateInsight(snapshot, user.riskProfile);
       return ok({
+        success: true,
+        provider: `gemini (${model})`,
+        snapshot,
+        insight,
+      });
+    } catch (gemErr) {
+      // Gemini request failed – fall back
+      return ok({
+        success: true,
         provider: 'local-fallback',
         snapshot,
         insight: fallbackInsight(snapshot, user.riskProfile, 'Gemini request failed.'),
+        message: gemErr.message,
       });
     }
-
-    const geminiJson = await geminiRes.json();
-    const insight =
-      geminiJson?.output_text ||
-      fallbackInsight(snapshot, user.riskProfile, 'Gemini did not return valid text.');
-
-    return ok({
-      provider: 'gemini',
-      snapshot,
-      insight,
-    });
   } catch (err) {
     console.error('Insights error:', err);
     return fail('Internal Server Error.', 500);
