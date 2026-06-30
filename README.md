@@ -91,6 +91,18 @@ npm run start
 - `npm run start` — launch the production server
 - `npm run lint` — run ESLint
 
+## DevOps and Deployment
+
+This repo currently uses a lightweight DevOps setup with:
+
+- Docker for containerization
+- GitHub Actions CI for build, lint, and format checks
+- Prettier for consistent formatting
+
+The current CI workflow is defined in `.github/workflows/ci.yml`.
+
+You can still containerize and run the app locally with Docker using the existing Dockerfile and docker-compose setup.
+
 ## License
 
     MIT

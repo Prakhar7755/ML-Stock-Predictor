@@ -69,6 +69,30 @@ export default function PredictPage() {
     setChartData(null);
 
     try {
+      if (selectedCompany === '__custom__') {
+        try {
+          const companyRes = await fetch('/api/company', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name,
+              symbol: sym,
+            }),
+          });
+
+          if (companyRes.ok || companyRes.status === 409) {
+            setCompanies((prev) => {
+              if (prev.some((company) => company.symbol === sym)) return prev;
+              return [...prev, { name, symbol: sym }];
+            });
+          } else {
+            console.warn('Failed to save custom company:', await companyRes.text());
+          }
+        } catch (companyErr) {
+          console.error('Custom company save failed', companyErr);
+        }
+      }
+
       const stockRes = await fetch('/api/stock', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
